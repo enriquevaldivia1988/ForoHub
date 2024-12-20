@@ -86,6 +86,10 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public void deleteTopic(Long id) {
+        // Verificar si el tópico existe
+        if (!topicRepository.existsById(id)) {
+            throw new IllegalArgumentException("El tópico con ID " + id + " no existe.");
+        }
         topicRepository.deleteById(id);
     }
 
