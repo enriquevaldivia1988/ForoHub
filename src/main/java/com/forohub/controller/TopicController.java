@@ -3,6 +3,7 @@ package com.forohub.controller;
 import com.forohub.domain.Topic;
 import com.forohub.dto.TopicDTO;
 import com.forohub.dto.TopicResponseDTO;
+import com.forohub.dto.UpdateTopicDTO;
 import com.forohub.infra.config.PaginatedResponse;
 import com.forohub.service.TopicService;
 import jakarta.validation.Valid;
@@ -55,5 +56,13 @@ public class TopicController {
     public ResponseEntity<Void> deleteTopic(@PathVariable Long id) {
         topicService.deleteTopic(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Topic> updateTopic(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateTopicDTO updateTopicDTO) {
+        Topic updatedTopic = topicService.updateTopic(id, updateTopicDTO);
+        return ResponseEntity.ok(updatedTopic);
     }
 }

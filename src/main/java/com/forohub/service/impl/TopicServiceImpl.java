@@ -5,16 +5,17 @@ import com.forohub.domain.Topic;
 import com.forohub.domain.User;
 import com.forohub.dto.TopicDTO;
 import com.forohub.dto.TopicResponseDTO;
+import com.forohub.dto.UpdateTopicDTO;
 import com.forohub.repository.CourseRepository;
 import com.forohub.repository.TopicRepository;
 import com.forohub.repository.UserRepository;
 import com.forohub.service.TopicService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -83,14 +84,30 @@ public class TopicServiceImpl implements TopicService {
                 ));
     }
 
-
-    @Override
-    public List<Topic> getAllTopics() {
-        return topicRepository.findAll();
-    }
-
     @Override
     public void deleteTopic(Long id) {
         topicRepository.deleteById(id);
+    }
+
+    @Override
+    public Topic updateTopic(Long id, @Valid UpdateTopicDTO updateTopicDTO) {
+        // Verificar si el tópico existe
+        Optional<Topic> optionalTopic = topicRepository.findById(id);
+        if (optionalTopic.isEmpty()) {
+            throw new IllegalArgumentException("El tópico con ID " + id + " no existe.");
+        }
+
+        // Verificar si hay duplicados (título y mensaje)
+        Optional<Topic> existingTopic = topicRepository.findByTitleAndMessage(updateTopicDTO.getTitle(), updateTopicDTO.getMessage());
+        if (existingTopic.isPresent() && !existingTopic.get().getId().equals(id)) {
+            throw new IllegalArgumentException("Ya existe un tópico con el mismo título y mensaje.");
+        }
+
+        // Actualizar el tópico
+        Topic topic = optionalTopic.get();
+        topic.setTitle(updateTopicDTO.getTitle());
+        topic.setMessage(updateTopicDTO.getMessage());
+
+        return topicRepository.save(topic);
     }
 }
