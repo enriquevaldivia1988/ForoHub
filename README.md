@@ -66,21 +66,28 @@ Aquí podrás explorar los distintos endpoints disponibles, probar las funcional
 
 ## Endpoints Principales 🔗
 
-- **Autenticación**:
-  - `POST /auth/register`: Registro de nuevos usuarios.
-  - `POST /auth/login`: Autenticación de usuarios y obtención de tokens JWT.
+### Authentication
+- **POST** `/login`: Authenticate a user and receive a JWT token.
 
-- **Tópicos**:
-  - `GET /topicos`: Listar todos los tópicos.
-  - `POST /topicos`: Crear un nuevo tópico.
-  - `GET /topicos/{id}`: Obtener detalles de un tópico específico.
-  - `PUT /topicos/{id}`: Actualizar un tópico existente.
-  - `DELETE /topicos/{id}`: Eliminar un tópico.
+### Users
+- **POST** `/users`: Crear un nuevo usuario.
+- **GET** `/users/{id}`: Obtener un usuario por ID.
+- **GET** `/users`: Obtener todos los usuarios.
+- **DELETE** `/users/{id}`: Eliminar un usuario por ID.
 
-- **Respuestas**:
-  - `POST /respuestas`: Añadir una respuesta a un tópico.
-  - `PUT /respuestas/{id}`: Actualizar una respuesta existente.
-  - `DELETE /respuestas/{id}`: Eliminar una respuesta.
+### Courses
+- **POST** `/courses`: Crear un nuevo curso.
+- **GET** `/courses/{id}`: Obtener un curso por ID.
+- **GET** `/courses`: Obtener todos los cursos.
+- **DELETE** `/courses/{id}`: Eliminar un curso por ID.
+
+### Topics
+- **POST** `/topics`: Crear un nuevo tópico.
+- **GET** `/topics/{id}`: Obtener un tópico por ID.
+- **GET** `/topics`: Obtener todos los tópicos.
+- **GET** `/topics/search`: Buscar tópicos por nombre del curso y año.
+- **DELETE** `/topics/{id}`: Eliminar un tópico por ID.
+- **PUT** `/topics/{id}`: Actualizar un tópico por ID.
 
 ## Contribuciones 🤝
 
