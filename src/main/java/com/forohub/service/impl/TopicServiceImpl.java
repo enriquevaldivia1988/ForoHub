@@ -6,10 +6,12 @@ import com.forohub.domain.User;
 import com.forohub.dto.TopicDTO;
 import com.forohub.dto.TopicResponseDTO;
 import com.forohub.dto.UpdateTopicDTO;
+import com.forohub.exception.GlobalExceptionHandler;
 import com.forohub.repository.CourseRepository;
 import com.forohub.repository.TopicRepository;
 import com.forohub.repository.UserRepository;
 import com.forohub.service.TopicService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -94,24 +96,27 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
+    @Transactional
     public Topic updateTopic(Long id, @Valid UpdateTopicDTO updateTopicDTO) {
-        // Verificar si el tópico existe
-        Optional<Topic> optionalTopic = topicRepository.findById(id);
-        if (optionalTopic.isEmpty()) {
-            throw new IllegalArgumentException("El tópico con ID " + id + " no existe.");
-        }
 
-        // Verificar si hay duplicados (título y mensaje)
-        Optional<Topic> existingTopic = topicRepository.findByTitleAndMessage(updateTopicDTO.title(), updateTopicDTO.message());
-        if (existingTopic.isPresent() && !existingTopic.get().getId().equals(id)) {
-            throw new IllegalArgumentException("Ya existe un tópico con el mismo título y mensaje.");
-        }
+        // Verifica si el tópico existe o lanza excepción
+        Topic topic = topicRepository.findById(id)
+                .orElseThrow(() -> new GlobalExceptionHandler.ResourceNotFoundException("El tópico con ID " + id + " no existe."));
+
+        // Verifica si existe un duplicado
+        validateUniqueTitleAndMessage(id, updateTopicDTO);
 
         // Actualizar el tópico
-        Topic topic = optionalTopic.get();
         topic.setTitle(updateTopicDTO.title());
         topic.setMessage(updateTopicDTO.message());
 
         return topicRepository.save(topic);
+    }
+
+    private void validateUniqueTitleAndMessage(Long id, UpdateTopicDTO updateTopicDTO) {
+        Optional<Topic> existingTopic = topicRepository.findByTitleAndMessage(updateTopicDTO.title(), updateTopicDTO.message());
+        if (existingTopic.isPresent() && !existingTopic.get().getId().equals(id)) {
+            throw new GlobalExceptionHandler.DuplicateTopicException("Ya existe un tópico con el mismo título y mensaje.");
+        }
     }
 }
