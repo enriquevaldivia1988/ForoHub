@@ -3,6 +3,7 @@ package com.forohub.controller;
 import com.forohub.domain.User;
 import com.forohub.dto.UserDTO;
 import com.forohub.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@SecurityRequirement(name = "bearer-key")
 public class UserController {
 
     @Autowired

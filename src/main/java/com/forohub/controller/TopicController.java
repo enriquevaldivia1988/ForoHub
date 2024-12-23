@@ -1,5 +1,6 @@
 package com.forohub.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import com.forohub.domain.Topic;
 import com.forohub.dto.TopicDTO;
 import com.forohub.dto.TopicResponseDTO;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/topics")
+@SecurityRequirement(name = "bearer-key")
 public class TopicController {
 
     private final TopicService topicService;

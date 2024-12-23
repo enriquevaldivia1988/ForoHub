@@ -33,21 +33,21 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public Topic createTopic(TopicDTO topicDTO) {
         // Verificar duplicados
-        Optional<Topic> existingTopic = topicRepository.findByTitleAndMessage(topicDTO.getTitle(), topicDTO.getMessage());
+        Optional<Topic> existingTopic = topicRepository.findByTitleAndMessage(topicDTO.title(), topicDTO.message());
         if (existingTopic.isPresent()) {
             throw new IllegalArgumentException("Ya existe un tópico con el mismo título y mensaje.");
         }
 
         // Validar que el autor y el curso existen
-        User author = userRepository.findById(topicDTO.getAuthorId())
+        User author = userRepository.findById(topicDTO.authorId())
                 .orElseThrow(() -> new RuntimeException("Autor no encontrado"));
-        Course course = courseRepository.findById(topicDTO.getCourseId())
+        Course course = courseRepository.findById(topicDTO.courseId())
                 .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
         // Crear y guardar el tópico
         Topic topic = new Topic();
-        topic.setTitle(topicDTO.getTitle());
-        topic.setMessage(topicDTO.getMessage());
+        topic.setTitle(topicDTO.title());
+        topic.setMessage(topicDTO.message());
         topic.setAuthor(author);
         topic.setCourse(course);
         return topicRepository.save(topic);
@@ -102,15 +102,15 @@ public class TopicServiceImpl implements TopicService {
         }
 
         // Verificar si hay duplicados (título y mensaje)
-        Optional<Topic> existingTopic = topicRepository.findByTitleAndMessage(updateTopicDTO.getTitle(), updateTopicDTO.getMessage());
+        Optional<Topic> existingTopic = topicRepository.findByTitleAndMessage(updateTopicDTO.title(), updateTopicDTO.message());
         if (existingTopic.isPresent() && !existingTopic.get().getId().equals(id)) {
             throw new IllegalArgumentException("Ya existe un tópico con el mismo título y mensaje.");
         }
 
         // Actualizar el tópico
         Topic topic = optionalTopic.get();
-        topic.setTitle(updateTopicDTO.getTitle());
-        topic.setMessage(updateTopicDTO.getMessage());
+        topic.setTitle(updateTopicDTO.title());
+        topic.setMessage(updateTopicDTO.message());
 
         return topicRepository.save(topic);
     }

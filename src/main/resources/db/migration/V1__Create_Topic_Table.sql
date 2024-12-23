@@ -6,6 +6,17 @@ CREATE TABLE user (
                       role ENUM('USER', 'ADMIN') DEFAULT 'USER'
 );
 
+create table usuarios(
+
+                         id bigint not null auto_increment,
+                         login varchar(100) not null,
+                         clave varchar(300) not null,
+
+                         primary key(id)
+
+);
+
+
 CREATE TABLE course (
                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
                         name VARCHAR(255) NOT NULL,

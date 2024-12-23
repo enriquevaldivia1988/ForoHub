@@ -18,8 +18,8 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course createCourse(CourseDTO courseDTO) {
         Course course = new Course();
-        course.setName(courseDTO.getName());
-        course.setDescription(courseDTO.getDescription());
+        course.setName(courseDTO.name());
+        course.setDescription(courseDTO.description());
         return courseRepository.save(course);
     }
 
