@@ -1,4 +1,4 @@
-package com.forohub.infra.springdoc;
+package com.forohub.configuration.springdoc;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

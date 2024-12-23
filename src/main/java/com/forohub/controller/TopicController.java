@@ -5,7 +5,7 @@ import com.forohub.domain.Topic;
 import com.forohub.dto.TopicDTO;
 import com.forohub.dto.TopicResponseDTO;
 import com.forohub.dto.UpdateTopicDTO;
-import com.forohub.infra.config.PaginatedResponse;
+import com.forohub.configuration.PaginatedResponse;
 import com.forohub.service.TopicService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;

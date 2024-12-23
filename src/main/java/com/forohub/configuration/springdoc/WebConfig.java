@@ -1,4 +1,4 @@
-package com.forohub.infra.springdoc;
+package com.forohub.configuration.springdoc;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

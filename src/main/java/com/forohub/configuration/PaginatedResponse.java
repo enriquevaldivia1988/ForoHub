@@ -1,4 +1,4 @@
-package com.forohub.infra.config;
+package com.forohub.configuration;
 
 import lombok.Getter;
 import lombok.Setter;

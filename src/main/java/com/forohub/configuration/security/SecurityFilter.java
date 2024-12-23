@@ -1,4 +1,4 @@
-package com.forohub.infra.security;
+package com.forohub.configuration.security;
 
 
 import com.forohub.repository.UsuarioRepository;
